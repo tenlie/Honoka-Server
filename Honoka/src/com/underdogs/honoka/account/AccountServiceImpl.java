@@ -11,8 +11,6 @@ public class AccountServiceImpl implements IAccountService {
 
 	@Autowired
 	IAccountDAO dao;
-	
-	
 
 	@Override
 	public void registerAccount() {
