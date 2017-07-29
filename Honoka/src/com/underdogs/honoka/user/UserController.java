@@ -48,6 +48,7 @@ public class UserController {
 		return "redirect:index.jsp";
 	}
 
+
 	@RequestMapping("/loginUser.do")
 	public String loginUser(Model m){
 		
@@ -79,5 +80,6 @@ public class UserController {
 		return "redirect:index.jsp";
 	}
 	
+
 
 }
