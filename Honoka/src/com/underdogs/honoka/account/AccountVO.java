@@ -2,24 +2,36 @@ package com.underdogs.honoka.account;
 
 //회원 정보
 public class AccountVO {
-	private String acid;
-	private String pwd;
-	private String gender;
+	private String acid; // 필
+	private String pwd;// 
+	private String gender; 
 	private int age;
-	private String email;
-	private String field;
-	private String company;
+	private String email; //필 
+	private String field; //
+	private String company;//필 
 	private int career;
 	private String regdate;
 	private String firstregid;
 	private String firstregdate;
 	private String lastupdateid;
 	private String lastupdatedate;
-	private String status;
+	private String status; 
 	public AccountVO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	public AccountVO(String acid, String pwd, String email, String field, String company) {
+		super();
+		this.acid = acid;
+		this.pwd = pwd;
+		this.email = email;
+		this.field = field;
+		this.company = company;
+	}
+
+
 	public AccountVO(String acid, String pwd, String gender, int age, String email, String field, String company,
 			int career, String regdate, String firstregid, String firstregdate, String lastupdateid,
 			String lastupdatedate, String status) {

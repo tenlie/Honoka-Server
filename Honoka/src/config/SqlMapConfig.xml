@@ -12,6 +12,8 @@
 		<typeAlias  alias="SuggestionVO"  type="com.scsa.busta.board.SuggestionVO" />
 		<typeAlias  alias="ReplyVO"  type="com.scsa.busta.board.ReplyVO" />
 		<typeAlias  alias="UserVO"  type="com.underdogs.honoka.user.UserVO" />
+		<typeAlias  alias="AccountVO"  type="com.underdogs.honoka.account.AccountVO" />
+		
 	</typeAliases>
 
 </configuration>

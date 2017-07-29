@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.underdogs.honoka.user.IUserService;
 import com.underdogs.honoka.user.UserVO;
@@ -18,13 +19,27 @@ import com.underdogs.honoka.user.UserVO;
 public class AccountController {
 	
 	@Autowired
-	IUserService service;
+	IAccountService service;
+	
+	
+	
+	//회원 로그인하기
+	@RequestMapping(value="/accountLogin.do", method={RequestMethod.GET, RequestMethod.POST})
+	public String member_login(String mid, String mpassword, Model m){
+		
+		
+		return "";
+		//AccountVO account = service.(mid);
+	
+	}
+	
 	
 	@RequestMapping("/registerAccount.do")
-	public void registerAccount(Model m){
+	public void registerAccount(){
+
+		System.out.println("registerAccount AccountController");
 		
-		System.out.println("getUserList");
-		List<UserVO> users = service.getUserList();
+/*		List<UserVO> Account = service.getUserList();
 		UserVO user = users.get(0);
 		System.out.println(user.toString());
 		JSONObject jsonObj =  new JSONObject();
@@ -47,6 +62,6 @@ public class AccountController {
 		{
 			//return jsonObject.toJSONString();
 		}
-
+*/
 	}
 }
