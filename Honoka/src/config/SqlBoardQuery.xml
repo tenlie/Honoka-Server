@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="board">
+
+	<!-- 건의사항 글 등록 -->
+	<insert id="sugWrite" parameterType="SuggestionVO">
+	    insert into suggestion values
+	    (SUGGESTION_SEQ.NEXTVAL, #{mid}, #{title}, #{content}, sysdate, 0)    
+	</insert>
+	
+	<!-- 건의사항 글 목록 -->
+	<select id="searchSugList" resultType="SuggestionVO">
+	    select nvl(count(r.sugnum),0) as replycount, s.sugnum, s.mid, s.title,
+	    to_char(s.writedate, 'yy/mm/dd') as writedate, s.count 
+	    from suggestion s, sugreply r
+	    where s.sugnum = r.sugnum(+)
+	    group by s.sugnum, s.mid, s.title, s.writedate, s.count 
+	    order by sugnum desc
+	</select>
+	
+	<!-- 건의사항 글 검색 -->
+	<select id="searchSug" parameterType="map" resultType="SuggestionVO">
+	    select nvl(count(r.sugnum),0) as replycount, s.sugnum, s.mid, s.title,
+	    to_char(s.writedate, 'yy/mm/dd') as writedate, s.count 
+	    from suggestion s, sugreply r
+	    <where>
+	      s.sugnum = r.sugnum(+)
+	        <choose>
+	     <when test="title != null and content != null">
+	     AND (s.title like '%'||#{title}||'%' OR s.content like '%'||#{content}||'%')
+	     </when>       
+	     <when test="title != null">
+	     AND s.title like '%'||#{title}||'%'
+	      </when>      
+	     <when test="content != null">   
+	     AND s.content like '%'||#{content}||'%'      
+	    </when>
+	        </choose>
+	    </where>
+	    group by s.sugnum, s.mid, s.title, s.writedate, s.count
+	    order by s.sugnum desc
+	</select>
+	
+	<!-- 건의사항 글 읽기 -->
+	<select id="getSugDetail" resultType="SuggestionVO">
+	    select sugnum, mid, title, content, to_char(writedate, 'yy/mm/dd') as writedate, 
+	    count from suggestion
+	    where sugnum=#{sugnum}
+	</select>
+	
+	<!-- 건의사항 조회수 +1 -->
+	<insert id="updateSugCount"  parameterType="map">
+	    update suggestion set count=#{count} where sugnum=#{sugnum}
+	</insert>
+	
+	<!-- 건의사항 글 수정 -->
+	<insert id="sugUpdate" parameterType="SuggestionVO">
+	    update suggestion set title=#{title}, content=#{content} 
+	    where sugnum=#{sugnum}
+	</insert>
+	
+	<!-- 건의사항 글 삭제 -->
+	<delete id="sugDelete" parameterType="SuggestionVO">
+	    delete suggestion where sugnum=#{sugnum}   
+	</delete>
+	
+
+	<!-- 건의사항 댓글 쓰기 -->
+	<insert id="sugReplyWrite" parameterType="ReplyVO">
+	    insert into sugreply values
+	    (sugreply_SEQ.NEXTVAL, #{gulnum}, #{mid}, #{content}, sysdate)   
+	</insert>
+	
+	<!-- 건의사항 댓글 리스트 -->
+	<select id="sugReplyList" resultType="ReplyVO">
+	    select replynum, mid, content, to_char(writedate, 'yy/mm/dd') as writedate
+	    from sugreply
+	    where sugnum=#{gulnum} order by replynum desc
+	</select>
+	
+	<!-- 건의사항 수정 댓글 선택 -->
+	<select id="sugReplyDetail" resultType="ReplyVO">
+	    select replynum, content from sugreply where replynum=#{replynum}
+	</select>
+	
+	<!-- 건의사항 댓글수정 -->
+	<insert id="sugReplyUpdate" parameterType="ReplyVO">
+	   	update sugreply set content=#{content} where replynum=#{replynum} 
+	</insert>
+	
+	<!-- 건의사항 댓글 삭제 -->
+	<delete id="sugReplyDelete" parameterType="ReplyVO">
+	    delete sugreply where replynum=#{replynum}  
+	</delete>
+	
+<!-- 분실물!!!!!!!! -->	
+ 
+	<!-- 분실물 글 등록 -->
+	<insert id="lostWrite" parameterType="LostBoardVO">
+	    insert into lostboard values
+	    (LOSTBOARD_SEQ.NEXTVAL, #{title}, #{mid}, #{location}, #{content}, #{image}, sysdate, 0)    
+	</insert>
+	
+	<!-- 분실물 글 목록 -->
+	<select id="searchLostList" resultType="LostBoardVO">
+	    select nvl(count(r.lostnum),0) as replycount, l.lostnum, l.title, l.mid, l.image, to_char(l.writedate, 'yy/mm/dd') as writedate, l.count 
+	    from lostboard l, lostreply r
+	    where l.lostnum = r.lostnum(+)
+	    group by l.lostnum, l.title, l.mid, l.image, l. writedate, l.count
+	    order by l.lostnum desc  
+	</select>
+	
+	<!-- 분실물 글 검색 -->
+	<select id="searchLostNFound" parameterType="hashMap" resultType="LostBoardVO">
+	    select nvl(count(r.lostnum),0) as replycount, l.lostnum, l.title, l.mid, l.image, to_char(l.writedate, 'yy/mm/dd') as writedate, l.count
+	    from lostboard l, lostreply r 
+	    <where>
+	     l.lostnum = r.lostnum(+) 
+	     <choose>
+	    <when test="title != null and content != null">   
+	      AND (l.title like '%'||#{title}||'%' OR l.content like '%'||#{content}||'%')      
+	    </when>
+	     <when test="title != null">
+	      AND l.title like '%'||#{title}||'%'
+	      </when>      
+	     <when test="content != null">   
+	      AND l.content like '%'||#{content}||'%'      
+	    </when>
+	     </choose>
+	    </where>
+	    group by l.lostnum, l.title, l.mid, l.image, l. writedate, l.count
+	    order by l.lostnum desc
+	</select>
+	
+	<!-- 분실물 글 읽기 -->
+	<select id="getLostDetail" resultType="LostBoardVO">
+	    select lostnum, title, mid, location, content, image, 
+	    to_char(writedate, 'yy/mm/dd') as writedate, count from lostboard
+	    where lostnum=#{lostnum}
+	</select>
+	
+	<!-- 분실물 조회수 +1 -->
+	<insert id="updateLostCount"  parameterType="map">
+	    update lostboard set count=#{count} where lostnum=#{lostnum}
+	</insert>
+	
+	<!-- 분실물 글 수정 -->
+	<insert id="lostUpdate" parameterType="LostBoardVO">
+	    update lostboard set title=#{title}, location=#{location}, 
+	    content=#{content}, image=#{image} 
+	    where lostnum=#{lostnum}
+	</insert>
+	
+	<!-- 분실물 글 삭제 -->
+	<delete id="lostDelete" parameterType="LostBoardVO">
+	    delete lostboard where lostnum=#{lostnum}   
+	</delete>
+
+	
+	<!-- 분실물 댓글 쓰기 -->
+	<insert id="lostReplyWrite" parameterType="ReplyVO">
+	    insert into lostreply values
+	    (lostreply_SEQ.NEXTVAL, #{gulnum}, #{mid}, #{content}, sysdate)   
+	</insert>
+	
+	<!-- 분실물댓글 리스트 -->
+	<select id="lostReplyList" resultType="ReplyVO">
+	    select replynum, mid, content, to_char(writedate, 'yy/mm/dd') as writedate
+	    from lostreply
+	    where lostnum=#{gulnum} order by replynum desc
+	</select>
+	
+	<!-- 분실물 수정 댓글 선택 -->
+	<select id="lostReplyDetail" resultType="ReplyVO">
+	    select replynum, content from lostreply where replynum=#{replynum}
+	</select>
+	
+	<!-- 분실물 댓글수정 -->
+	<insert id="lostReplyUpdate" parameterType="ReplyVO">
+	   	update lostreply set content=#{content} where replynum=#{replynum} 
+	</insert>
+	
+	<!-- 분실물 댓글 삭제 -->
+	<delete id="lostReplyDelete" parameterType="ReplyVO">
+	    delete lostreply where replynum=#{replynum}  
+	</delete>
+
+</mapper>

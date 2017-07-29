@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	
+	<typeAliases>
+		<typeAlias  alias="LostBoardVO"  type="com.scsa.busta.board.LostBoardVO" />
+		<typeAlias  alias="SuggestionVO"  type="com.scsa.busta.board.SuggestionVO" />
+		<typeAlias  alias="ReplyVO"  type="com.scsa.busta.board.ReplyVO" />
+		<typeAlias  alias="SuggestionVO"  type="com.scsa.busta.board.SuggestionVO" />
+		<typeAlias  alias="ReplyVO"  type="com.scsa.busta.board.ReplyVO" />
+		<typeAlias  alias="UserVO"  type="com.underdogs.honoka.user.UserVO" />
+	</typeAliases>
+
+</configuration>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
