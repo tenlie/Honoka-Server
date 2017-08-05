@@ -19,6 +19,20 @@
 			#{career}, #{regdate}, #{firstregid}, #{firstregdate}, #{lastupdateid},
 			#{lastupdatedate}, #{status})
 	</insert>
+	
+		<!-- 중복계정 체크 -->
+	
+	<select id="accountCheck" resultType="AccountVO">
+				select u.userid from userinfo u
+				where u.userid = aid
+				</select>
+				
+	<!--  회사이름 리스트 -->
+	
+	<select id="getCompanyInfo" resultType="CompanyVO">
+				select c_num, c_name, c_kind, c_product, c_location
+				from company where c_name=#{c_name} order by c_num desc
+	</select>
 
 
 

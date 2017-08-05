@@ -6,13 +6,22 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.underdogs.honoka.user.UserVO;
+
 @Repository
 public class AccountDAOImpl implements IAccountDAO {
 
 	@Autowired
 	SqlSession session;
 	
-	
+	@Override
+	public List<UserVO> getUserList() {
+		System.out.println("UserDAOImpl : getUserList()");
+		List<UserVO> users=session.selectList("user.getUserList");
+		System.out.println(users.toString());
+		
+		return users;
+	}
 	@Override
 	public void registerAccount(AccountVO account) {
 		// TODO Auto-generated method stub
@@ -22,8 +31,7 @@ public class AccountDAOImpl implements IAccountDAO {
 
 	@Override
 	public String accountCheck(String aid) {
-		// TODO Auto-generated method stub
-		return null;
+		return session.selectOne("account.accountCheck", aid);
 	}
 
 	@Override
@@ -46,6 +54,10 @@ public class AccountDAOImpl implements IAccountDAO {
 			result="0";
 		}
 		return result;
+	}
+	@Override
+	public List<CompanyVO> getCompanyInfo(String c_name) {
+		return session.selectList("account.getCompanyInfo", c_name);
 	}
 
 	/*

@@ -13,31 +13,27 @@ public class AccountServiceImpl implements IAccountService {
 
 	@Override
 	public void registerAccount(AccountVO account) {
-		// TODO Auto-generated method stub
 		dao.registerAccount(account);
 	}
 
 	@Override
 	public String accountCheck(String aid) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.accountCheck(aid);
 	}
 
 	@Override
 	public List<CompanyVO> getCompanyInfo(String c_name) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.getCompanyInfo(c_name);
+
 	}
 
 	@Override
 	public void updateAccount(String pwd, String field, String company) {
-		// TODO Auto-generated method stub
 		dao.updateAccount(pwd, field, company);
 	}
 
 	@Override
 	public String loginAccount(String acid, String pwd) {
-		// TODO Auto-generated method stub
 		String result = dao.loginAccount(acid, pwd);
 		return result;
 	}

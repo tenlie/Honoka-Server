@@ -20,7 +20,8 @@ public class AccountController {
 	
 	@Autowired
 	IAccountService service;
-	
+	IAccountService a_service;
+
 	
 	
 	//회원 로그인하기
@@ -63,5 +64,20 @@ public class AccountController {
 			//return jsonObject.toJSONString();
 		}
 */
+	}
+	@RequestMapping("/AccountCheck.do")
+	public int AccountCheck(String aid, Model m){
+		int flag = 1;
+		if(a_service.accountCheck(aid)==null){
+			flag = 0;
+			System.out.println("�ùٸ� ���̵��Դϴ�.");
+		}
+		return flag;
+	}
+	@RequestMapping("/GetCompanyInfo.do")
+	public List<CompanyVO> getCompanyInfo(String c_name, Model m){
+		a_service.getCompanyInfo(c_name);
+		return null;
+		
 	}
 }
